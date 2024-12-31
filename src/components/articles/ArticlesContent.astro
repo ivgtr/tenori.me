@@ -19,7 +19,7 @@ const articleSources = [
 	},
 	{
 		site: "Qita",
-		url: "https://qiita.com/tenori/feed",
+		url: "https://qiita.com/tenori/feed.atom",
 	},
 ] as const;
 
@@ -34,24 +34,7 @@ try {
 			const response = await fetch(source.url);
 			const text = await response.text();
 			const data = parser.parse(text);
-			if (source.site === "Hatena") {
-				const articles = data.rss.channel.item as {
-					title: string;
-					link: string;
-					pubDate: Date;
-				}[];
-				articleObject[source.site] = articles
-					.sort(
-						(a, b) =>
-							new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime(),
-					)
-					.map((article) => ({
-						title: article.title,
-						url: article.link,
-						created: new Date(article.pubDate),
-					}))
-					.splice(0, 5);
-			} else if (source.site === "Qita") {
+			if (source.site === "Qita") {
 				const articles = data.feed.entry as {
 					title: string;
 					url: string;
@@ -68,7 +51,7 @@ try {
 						created: new Date(article.published),
 					}))
 					.splice(0, 5);
-			} else if (source.site === "Scrapbox") {
+			} else {
 				const articles = data.rss.channel.item as {
 					title: string;
 					link: string;
@@ -87,9 +70,7 @@ try {
 					.splice(0, 5);
 			}
 		}),
-	).finally(() => {
-		console.log("articles loaded");
-	});
+	);
 } catch (error) {
 	console.error(error);
 }
