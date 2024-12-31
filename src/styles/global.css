@@ -1,8 +1,6 @@
-/*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
 	--accent: #2337ff;
@@ -12,42 +10,61 @@
 	--gray-light: 229, 233, 240;
 	--gray-dark: 34, 41, 57;
 	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
-	--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
-		0 16px 32px rgba(var(--gray), 33%);
+	--white: 243, 244, 246;
+	--box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px
+		rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%);
 }
+
+@media (prefers-color-scheme: light) {
+	html {
+		--primary-color: 15, 18, 25;
+		--background-color: 243, 244, 246;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	html {
+		--primary-color: 243, 244, 246;
+		--background-color: 15, 18, 25;
+	}
+}
+
 @font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-regular.woff') format('woff');
+	font-family: "MaruMonica";
+	src: url("/fonts/x12y16pxMaruMonica.woff") format("woff");
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
 }
-@font-face {
-	font-family: 'Atkinson';
-	src: url('/fonts/atkinson-bold.woff') format('woff');
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
-}
+
 body {
-	font-family: 'Atkinson', sans-serif;
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	font-family:
+		"MaruMonica", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+		Fira Sans, "Droid Sans", Helvetica Neue, sans-serif;
 	margin: 0;
 	padding: 0;
 	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
+	background: rgb(var(--background-color)) no-repeat;
 	background-size: 100% 600px;
 	word-wrap: break-word;
+	word-break: auto-phrase;
 	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
+	color: rgb(var(--primary-color));
 	font-size: 20px;
-	line-height: 1.7;
+	line-height: 1.4;
 }
 main {
-	width: 720px;
 	max-width: calc(100% - 2em);
 	margin: auto;
-	padding: 3em 1em;
 }
+
+section {
+	padding: 0 0 1em 0;
+}
+
 h1,
 h2,
 h3,
@@ -55,23 +72,22 @@ h4,
 h5,
 h6 {
 	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
-	line-height: 1.2;
+	line-height: 1.1;
 }
 h1 {
-	font-size: 3.052em;
+	font-size: 4.8em;
 }
 h2 {
-	font-size: 2.441em;
+	font-size: 2.4em;
 }
 h3 {
-	font-size: 1.953em;
+	font-size: 1.9em;
 }
 h4 {
-	font-size: 1.563em;
+	font-size: 1.5em;
 }
 h5 {
-	font-size: 1.25em;
+	font-size: 1.2em;
 }
 strong,
 b {
@@ -129,9 +145,6 @@ hr {
 @media (max-width: 720px) {
 	body {
 		font-size: 18px;
-	}
-	main {
-		padding: 1em;
 	}
 }
 

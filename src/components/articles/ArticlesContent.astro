@@ -1,0 +1,142 @@
+---
+import { XMLParser } from "fast-xml-parser";
+import FormattedDate from "./FormattedDate.astro";
+
+type Article = {
+	title: string;
+	url: string;
+	created: Date;
+};
+
+const articleSources = [
+	{
+		site: "Scrapbox",
+		url: "https://scrapbox.io/api/feed/ivgtr",
+	},
+	{
+		site: "Hatena",
+		url: "https://ivgtr.hatenablog.jp/rss",
+	},
+	{
+		site: "Qita",
+		url: "https://qiita.com/tenori/feed",
+	},
+] as const;
+
+type Site = (typeof articleSources)[number]["site"];
+
+const articleObject = {} as Record<Site, Article[]>;
+
+try {
+	const parser = new XMLParser();
+	await Promise.all(
+		articleSources.map(async (source) => {
+			const response = await fetch(source.url);
+			const text = await response.text();
+			const data = parser.parse(text);
+			if (source.site === "Hatena") {
+				const articles = data.rss.channel.item as {
+					title: string;
+					link: string;
+					pubDate: Date;
+				}[];
+				articleObject[source.site] = articles
+					.sort(
+						(a, b) =>
+							new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime(),
+					)
+					.map((article) => ({
+						title: article.title,
+						url: article.link,
+						created: new Date(article.pubDate),
+					}))
+					.splice(0, 5);
+			} else if (source.site === "Qita") {
+				const articles = data.feed.entry as {
+					title: string;
+					url: string;
+					published: Date;
+				}[];
+				articleObject[source.site] = articles
+					.sort(
+						(a, b) =>
+							new Date(b.published).getTime() - new Date(a.published).getTime(),
+					)
+					.map((article) => ({
+						title: article.title,
+						url: article.url,
+						created: new Date(article.published),
+					}))
+					.splice(0, 5);
+			} else if (source.site === "Scrapbox") {
+				const articles = data.rss.channel.item as {
+					title: string;
+					link: string;
+					pubDate: Date;
+				}[];
+				articleObject[source.site] = articles
+					.sort(
+						(a, b) =>
+							new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime(),
+					)
+					.map((article) => ({
+						title: article.title,
+						url: article.link,
+						created: new Date(article.pubDate),
+					}))
+					.splice(0, 5);
+			}
+		}),
+	).finally(() => {
+		console.log("articles loaded");
+	});
+} catch (error) {
+	console.error(error);
+}
+---
+
+<ul>
+	{
+		Object.entries(articleObject).map(([site, articles]) => (
+			<li>
+				<h2>{site}</h2>
+				<ul>
+					{articles.map((article) => (
+						<li>
+							<p>
+								<FormattedDate date={article.created} />
+								<a
+									href="{article.url}"
+									target="_blank"
+									class="hover:underline text-blue-500"
+								>
+									{article.title}
+								</a>
+							</p>
+						</li>
+					))}
+				</ul>
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	ul {
+		padding: 0 0 0 1em;
+		margin: 0.5em 0;
+		list-style: disc;
+	}
+
+	li p:last-child {
+		margin: 0;
+	}
+
+	ul ul {
+		list-style: circle;
+	}
+
+	ul ul ul {
+		list-style: square;
+	}
+</style>

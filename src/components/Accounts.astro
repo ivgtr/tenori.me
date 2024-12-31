@@ -1,0 +1,61 @@
+---
+import {
+	faBlogger,
+	faBluesky,
+	faGithub,
+	faSteam,
+	faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
+import FontAwesomeIcon from "./FontAwesomeIcon.astro";
+
+const accounts = [
+	{
+		title: "Twitter",
+		alt: "mawaru_hana",
+		url: "https://twitter.com/mawaru_hana",
+		icon: faTwitter,
+	},
+	{
+		title: "Bluesky",
+		alt: "tenori",
+		url: "https://bsky.app/profile/tenori.uk",
+		icon: faBluesky,
+	},
+	{
+		title: "Github",
+		alt: "ivgtr",
+		url: "https://github.com/ivgtr",
+		icon: faGithub,
+	},
+	{
+		title: "Steam",
+		alt: "Steam",
+		url: "https://steamcommunity.com/id/oyanmi",
+		icon: faSteam,
+	},
+	{
+		title: "Scrapbox",
+		alt: "Scrapbox",
+		url: "https://scrapbox.io/ivgtr/",
+		icon: faBlogger,
+	},
+];
+---
+
+<ul class="flex flex-wrap gap-2">
+	{
+		accounts.map((account) => (
+			<li>
+				<a
+					href={account.url}
+					class="flex items-center justify-center w-8 h-8 bg-gray-700 dark:bg-gray-100 dark:text-gray-700 text-gray-100 rounded-full overflow-hidden transition-all duration-200 hover:text-opacity-80 cursor-pointer"
+					target="_blank"
+					data-tip={account.alt}
+					aria-label={account.title}
+				>
+					<FontAwesomeIcon icon={account.icon} />
+				</a>
+			</li>
+		))
+	}
+</ul>
