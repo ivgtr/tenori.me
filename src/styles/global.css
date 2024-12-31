@@ -19,6 +19,8 @@
 	html {
 		--primary-color: 15, 18, 25;
 		--background-color: 243, 244, 246;
+		--input-color: 243, 244, 246;
+		--input-background: 15, 18, 25;
 	}
 }
 
@@ -26,6 +28,8 @@
 	html {
 		--primary-color: 243, 244, 246;
 		--background-color: 15, 18, 25;
+		--input-color: 15, 18, 25;
+		--input-background: 243, 244, 246;
 	}
 }
 
@@ -108,9 +112,27 @@ p {
 textarea {
 	width: 100%;
 	font-size: 16px;
+	color: rgb(var(--input-color));
+	background-color: rgb(var(--input-background));
+	font-family:
+		-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+		Fira Sans, "Droid Sans", Helvetica Neue, sans-serif;
 }
 input {
 	font-size: 16px;
+	color: rgb(var(--input-color));
+	background-color: rgb(var(--input-background));
+	font-family:
+		-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+		Fira Sans, "Droid Sans", Helvetica Neue, sans-serif;
+}
+select {
+	font-size: 16px;
+	color: rgb(var(--input-color));
+	background-color: rgb(var(--input-background));
+	font-family:
+		-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+		Fira Sans, "Droid Sans", Helvetica Neue, sans-serif;
 }
 table {
 	width: 100%;

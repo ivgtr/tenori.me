@@ -44,18 +44,24 @@ const accounts = [
 
 <ul class="flex flex-wrap gap-2">
 	{
-		accounts.map((account) => (
-			<li>
-				<a
-					href={account.url}
-					class="flex items-center justify-center w-8 h-8 bg-gray-700 dark:bg-gray-100 dark:text-gray-700 text-gray-100 rounded-full overflow-hidden transition-all duration-200 hover:text-opacity-80 cursor-pointer"
-					target="_blank"
-					data-tip={account.alt}
-					aria-label={account.title}
-				>
-					<FontAwesomeIcon icon={account.icon} />
-				</a>
-			</li>
-		))
+		accounts.map((account, i) => {
+			const style = {
+				animationDelay: `${i * 0.1 + 0.2}s`,
+			};
+
+			return (
+				<li class="animate-fade-in" style={style}>
+					<a
+						href={account.url}
+						class="flex items-center justify-center w-8 h-8 bg-gray-700 dark:bg-gray-100 dark:text-gray-700 text-gray-100 rounded-full overflow-hidden transition-all duration-200 hover:text-opacity-80 cursor-pointer"
+						target="_blank"
+						data-tip={account.alt}
+						aria-label={account.title}
+					>
+						<FontAwesomeIcon icon={account.icon} />
+					</a>
+				</li>
+			);
+		})
 	}
 </ul>

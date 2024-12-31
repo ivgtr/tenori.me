@@ -1,13 +1,19 @@
 ---
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import FontAwesomeIcon from "./FontAwesomeIcon.astro";
+
+interface Props {
+	to: string;
+}
+
+const { to } = Astro.props;
 ---
 
 <header>
-	<nav class="relative inline-block top-2 left-2">
+	<nav class="inline-block p-2">
 		<a
-			href="/"
-			class="p-2 text-gray-700 dark:text-gray-100 transition-all duration-200 hover:text-opacity-80"
+			href={to}
+			class="inline-block p-2 text-gray-700 dark:text-gray-100 transition-all duration-200 hover:text-opacity-80"
 			><FontAwesomeIcon icon={faArrowLeft} /></a
 		>
 	</nav>
