@@ -7,7 +7,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={`tools | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header to="/" />
@@ -19,6 +19,11 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 					<li>
 						<a href="/tools/pixel-image" class="hover:underline text-blue-500"
 							>画像をドット風にする</a
+						>
+					</li>
+					<li>
+						<a href="/tools/pdca" class="hover:underline text-blue-500"
+							>PDCAを回せ！（パクリ）</a
 						>
 					</li>
 				</ul>
