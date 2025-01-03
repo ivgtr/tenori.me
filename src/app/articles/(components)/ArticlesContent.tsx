@@ -5,7 +5,8 @@ import clsx from "clsx";
 
 const fetchArticles = async () => {
 	try {
-		const url = "http://localhost:3000/api/articles";
+		const { NEXT_PUBLIC_BASE_URL = "" } = process.env;
+		const url = new URL("/api/articles", NEXT_PUBLIC_BASE_URL).toString();
 		const response = await fetch(url);
 		return (await response.json()) as Record<Site, Article[]>;
 	} catch (error) {
