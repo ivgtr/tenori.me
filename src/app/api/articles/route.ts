@@ -77,6 +77,5 @@ export async function GET() {
 		console.error(error);
 	}
 
-	console.log(articleObject);
 	return NextResponse.json(articleObject);
 }
