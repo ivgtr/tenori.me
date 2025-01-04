@@ -2,6 +2,7 @@ import { Site } from "@/app/api/articles/route";
 import { FormattedDate } from "@/components/FormattedDate";
 import { Article } from "@/types/articles";
 import clsx from "clsx";
+import Link from "next/link";
 
 const fetchArticles = async () => {
 	try {
@@ -27,13 +28,13 @@ export const ArticlesContent = async () => {
 							<li key={article.url}>
 								<p>
 									<FormattedDate date={article.created} />-{" "}
-									<a
+									<Link
 										href={article.url}
 										target="_blank"
 										className={clsx("hover:underline", "text-blue-500")}
 									>
 										{article.title}
-									</a>
+									</Link>
 								</p>
 							</li>
 						))}
