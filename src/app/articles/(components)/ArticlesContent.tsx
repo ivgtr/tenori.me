@@ -8,7 +8,7 @@ const fetchArticles = async () => {
 	try {
 		const { NEXT_PUBLIC_BASE_URL = "" } = process.env;
 		const url = new URL("/api/articles", NEXT_PUBLIC_BASE_URL).toString();
-		const response = await fetch(url);
+		const response = await fetch(url, { next: { revalidate: 3600 } });
 		return (await response.json()) as Record<Site, Article[]>;
 	} catch (error) {
 		console.error(error);
@@ -18,6 +18,11 @@ const fetchArticles = async () => {
 
 export const ArticlesContent = async () => {
 	const articles = await fetchArticles();
+
+	if (Object.keys(articles).length === 0) {
+		return <p>データ取得エラー</p>;
+	}
+
 	return (
 		<ul className="list">
 			{Object.entries(articles).map(([site, articles]) => (
