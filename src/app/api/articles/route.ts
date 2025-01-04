@@ -5,7 +5,7 @@ import { Article } from "@/types/articles";
 const articleSources = [
 	{
 		site: "Scrapbox",
-		url: "https://scrapbox.io/api/feed/ivgtr",
+		url: "https://scrapbox.io/api/pages/ivgtr",
 	},
 	{
 		site: "Hatena",
@@ -33,9 +33,9 @@ export async function GET() {
 		await Promise.all(
 			articleSources.map(async (source) => {
 				const response = await fetch(source.url);
-				const text = await response.text();
-				const data = parser.parse(text);
 				if (source.site === "Qita") {
+					const text = await response.text();
+					const data = parser.parse(text);
 					const articles = data.feed.entry as {
 						title: string;
 						url: string;
@@ -53,7 +53,9 @@ export async function GET() {
 							created: article.published,
 						}))
 						.splice(0, 5);
-				} else {
+				} else if (source.site === "Hatena") {
+					const text = await response.text();
+					const data = parser.parse(text);
 					const articles = data.rss.channel.item as {
 						title: string;
 						link: string;
@@ -68,6 +70,24 @@ export async function GET() {
 							title: article.title,
 							url: article.link,
 							created: article.pubDate,
+						}))
+						.splice(0, 5);
+				} else if (source.site === "Scrapbox") {
+					const data = await response.json();
+					const pjName = data.projectName;
+					const articles = data.pages as {
+						title: string;
+						created: number;
+					}[];
+
+					articleObject[source.site] = articles
+						.sort((a, b) => b.created - a.created)
+						.map((article) => ({
+							title: article.title,
+							url: `https://scrapbox.io/${pjName}/${encodeURIComponent(
+								article.title,
+							)}`,
+							created: new Date(article.created * 1000).toISOString(),
 						}))
 						.splice(0, 5);
 				}
