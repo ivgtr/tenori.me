@@ -6,7 +6,7 @@ export default function Tools() {
 		<div>
 			<Header to="/" />
 			<main>
-				<h1>Articles</h1>
+				<h1>Tools</h1>
 				<ToolsContent />
 			</main>
 		</div>
