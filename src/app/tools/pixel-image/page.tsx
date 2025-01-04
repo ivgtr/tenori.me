@@ -13,7 +13,7 @@ export default function PixelImage() {
 				</section>
 				<section>
 					<h3>使い方</h3>
-					<ul>
+					<ul className="list">
 						<li>
 							<p>画像URLにドット風にしたい画像のURLを入力</p>
 						</li>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { marumonica } from "../styles/fonts";
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
@@ -17,7 +18,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body>{children}</body>
+			<body className={`${marumonica.variable}`}>{children}</body>
 		</html>
 	);
 }
