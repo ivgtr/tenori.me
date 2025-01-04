@@ -2,36 +2,34 @@
 
 import React, { useCallback, useState } from "react";
 import Form from "./Form";
-import Image from "next/image";
+
+export type Pattern = "circle" | "hart" | "star";
 
 const defaultImageUrl =
 	"https://pbs.twimg.com/profile_images/1633247750010830848/8zfRrYjA_400x400.png";
-const defaultCellSize = "15";
-const defaultKSize = "8";
+const defaultPattern: Pattern = "circle";
 
 export default function Preview() {
 	const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-	const changeImageUrl = useCallback(
-		(imageUrl: string, size: string, k: string) => {
-			const url = new URL("https://pixel-image.vercel.app/api");
-			url.searchParams.set("image", imageUrl);
-			url.searchParams.set("size", size);
-			url.searchParams.set("k", k);
-			setImageUrl(url.toString());
-		},
-		[],
-	);
+	const changeImageUrl = useCallback((imageUrl: string, pattern: Pattern) => {
+		const url = new URL("https://crop-icon.vercel.app/api");
+		url.searchParams.set("url", imageUrl);
+		url.searchParams.set("p", pattern);
+		setImageUrl(url.toString());
+	}, []);
+
+	console.log(imageUrl);
 
 	return (
 		<div>
-			<div className="relative w-full h-72 mt-12">
+			<div className="relative w-full h-72 mt-12 bg-gray-200">
 				{imageUrl ? (
-					<Image
+					// eslint-disable-next-line @next/next/no-img-element
+					<img
 						src={imageUrl}
-						alt="画像をドット風にする"
+						alt="画像を切り抜くやつ"
 						className="w-full h-full object-contain"
-						fill
 					/>
 				) : (
 					<p className="w-full h-full text-center">loading...</p>
@@ -39,8 +37,7 @@ export default function Preview() {
 			</div>
 			<Form
 				defaultImageUrl={defaultImageUrl}
-				defaultCellSize={defaultCellSize}
-				defaultKSize={defaultKSize}
+				defaultPattern={defaultPattern}
 				handleChange={changeImageUrl}
 			/>
 		</div>

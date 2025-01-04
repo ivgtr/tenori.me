@@ -13,6 +13,14 @@ export const ToolsContent = async () => {
 						画像をドット風にする
 					</a>
 				</li>
+				<li>
+					<a
+						href="/tools/crop-icon"
+						className={clsx("hover:underline", "text-blue-500")}
+					>
+						画像を切り抜くやつ
+					</a>
+				</li>
 			</ul>
 		</section>
 	);
