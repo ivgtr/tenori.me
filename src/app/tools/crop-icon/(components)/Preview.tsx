@@ -19,8 +19,6 @@ export default function Preview() {
 		setImageUrl(url.toString());
 	}, []);
 
-	console.log(imageUrl);
-
 	return (
 		<div>
 			<div className="relative w-full h-72 mt-12 bg-gray-200">
