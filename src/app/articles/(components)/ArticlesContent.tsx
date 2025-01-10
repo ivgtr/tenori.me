@@ -7,18 +7,6 @@ import { Article } from "@/types/articles";
 import clsx from "clsx";
 import Link from "next/link";
 
-const fetchArticles = async () => {
-	try {
-		const { NEXT_PUBLIC_BASE_URL = "" } = process.env;
-		const url = new URL("/api/articles", NEXT_PUBLIC_BASE_URL).toString();
-		const response = await fetch(url, { next: { revalidate: 3600 } });
-		return (await response.json()) as Record<Site, Article[]>;
-	} catch (error) {
-		console.error(error);
-		return {} as Record<Site, Article[]>;
-	}
-};
-
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const ArticlesContent = () => {
