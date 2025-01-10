@@ -20,7 +20,7 @@ const accounts = [
 	{
 		title: "Bluesky",
 		alt: "tenori",
-		url: "https://bsky.app/profile/tenori.uk",
+		url: "https://bsky.app/profile/tenori.me",
 		icon: faBluesky,
 	},
 	{

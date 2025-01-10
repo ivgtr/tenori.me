@@ -8,7 +8,7 @@ export default function Home() {
 	return (
 		<div>
 			<main>
-				<h1>tenori.uk</h1>
+				<h1>tenori.me</h1>
 				<section>
 					<h2>About me</h2>
 					<Icon />
