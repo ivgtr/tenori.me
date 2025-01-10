@@ -20,7 +20,7 @@ export const ArticlesContent = async () => {
 	const articles = await fetchArticles();
 
 	if (Object.keys(articles).length === 0) {
-		return <p>データ取得エラー</p>;
+		return;
 	}
 
 	return (

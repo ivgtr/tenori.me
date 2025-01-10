@@ -15,6 +15,10 @@
 		0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%);
 }
 
+html {
+	height: 100%;
+}
+
 @media (prefers-color-scheme: light) {
 	html {
 		--primary-color: 15, 18, 25;
@@ -62,7 +66,13 @@ body {
 	font-size: 20px;
 	line-height: 1.4;
 }
-main {
+
+body > div {
+	height: 100%;
+}
+
+main,
+footer {
 	max-width: calc(100% - 2em);
 	margin: auto;
 }

@@ -5,7 +5,7 @@ export const Profile = () => {
 				<h3>Identity</h3>
 				<ul>
 					<li>
-						<p>tenori</p>
+						<p>ivgtr</p>
 					</li>
 				</ul>
 			</li>

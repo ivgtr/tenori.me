@@ -7,6 +7,6 @@
 
 ## License
 
-MIT ©[tenori](https://github.com/tenorinet)
+MIT ©[ivgtr](https://github.com/ivgtr)
 
-[![Bluesky](https://img.shields.io/badge/Bluesky-0285FF?logo=bluesky&logoColor=fff)](https://bsky.tenori.uk/) [![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?logo=github&logoColor=white)](https://github.com/tenorinet)
+[![Bluesky](https://img.shields.io/badge/Bluesky-0285FF?logo=bluesky&logoColor=fff)](https://bsky.tenori.uk/) [![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?logo=github&logoColor=white)](https://github.com/ivgtr)
