@@ -7,7 +7,7 @@ const fetchAcceseCount = async () => {
 		const { NEXT_PUBLIC_BASE_URL = "" } = process.env;
 		const url = new URL("/api/counter", NEXT_PUBLIC_BASE_URL).toString();
 		const response = await fetch(url, {
-			next: { revalidate: 3600 },
+			cache: "no-store",
 		});
 		return (await response.json()) as Counter;
 	} catch (error) {
@@ -15,6 +15,7 @@ const fetchAcceseCount = async () => {
 		return {} as Counter;
 	}
 };
+
 export const AcceseCounter = async () => {
 	const acceseCount = await fetchAcceseCount();
 
