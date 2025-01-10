@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Preview from "./(components)/Preview";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 export default function PixelImage() {
 	return (
@@ -39,6 +40,7 @@ export default function PixelImage() {
 					</ul>
 				</section>
 			</main>
+			<Footer />
 		</div>
 	);
 }

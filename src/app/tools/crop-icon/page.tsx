@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import { Header } from "@/components/Header";
 import Preview from "./(components)/Preview";
+import { Footer } from "@/components/Footer";
 
 export default function ClopIcon() {
 	return (
@@ -36,6 +37,7 @@ export default function ClopIcon() {
 					</ul>
 				</section>
 			</main>
+			<Footer />
 		</div>
 	);
 }

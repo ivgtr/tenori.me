@@ -2,6 +2,7 @@ import { Icon } from "@/components/Icon";
 import { Profile } from "./(components)/Profile";
 import { PageLink } from "./(components)/PageLink";
 import { Contact } from "./(components)/Contact";
+import { Footer } from "@/components/Footer";
 
 export default function Home() {
 	return (
@@ -22,6 +23,7 @@ export default function Home() {
 					<PageLink />
 				</section>
 			</main>
+			<Footer />
 		</div>
 	);
 }

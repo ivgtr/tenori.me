@@ -10,10 +10,6 @@ const tools = [
 		name: "画像を切り抜くやつ",
 		url: "/tools/crop-icon",
 	},
-	{
-		name: "2D迷路",
-		url: "/tools/labyrinth-2d",
-	},
 ];
 
 export const ToolsContent = async () => {

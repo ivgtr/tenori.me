@@ -1,5 +1,6 @@
 import { Header } from "@/components/Header";
 import { ArticlesContent } from "./(components)/ArticlesContent";
+import { Footer } from "@/components/Footer";
 
 export default function Articles() {
 	return (
@@ -9,6 +10,7 @@ export default function Articles() {
 				<h1>Articles</h1>
 				<ArticlesContent />
 			</main>
+			<Footer />
 		</div>
 	);
 }
