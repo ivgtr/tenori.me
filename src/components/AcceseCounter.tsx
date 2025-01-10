@@ -9,10 +9,7 @@ type Counter = {
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const AcceseCounter = () => {
-	const { data, error } = useSWR<Counter>(
-		`${process.env.NEXT_PUBLIC_BASE_URL}/api/counter`,
-		fetcher,
-	);
+	const { data, error } = useSWR<Counter>("/api/counter", fetcher);
 
 	return (
 		<div>
