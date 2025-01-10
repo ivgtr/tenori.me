@@ -1,3 +1,6 @@
+"use client";
+
+import useSWR from "swr/immutable";
 import { Site } from "@/app/api/articles/route";
 import { FormattedDate } from "@/components/FormattedDate";
 import { Article } from "@/types/articles";
@@ -16,16 +19,21 @@ const fetchArticles = async () => {
 	}
 };
 
-export const ArticlesContent = async () => {
-	const articles = await fetchArticles();
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-	if (Object.keys(articles).length === 0) {
-		return;
+export const ArticlesContent = () => {
+	const { data, error } = useSWR<Record<Site, Article[]>>("/api/articles", fetcher);
+
+	if (error) {
+		return <p>記事の取得に失敗しました</p>;
+	}
+	if (!data) {
+		return <p>記事を取得中...</p>;
 	}
 
 	return (
 		<ul className="list">
-			{Object.entries(articles).map(([site, articles]) => (
+			{Object.entries(data).map(([site, articles]) => (
 				<li key={site}>
 					<h2>{site}</h2>
 					<ul>
