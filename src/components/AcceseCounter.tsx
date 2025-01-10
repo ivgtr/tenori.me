@@ -1,31 +1,28 @@
+"use client";
+
+import useSWR from "swr/immutable";
+
 type Counter = {
 	count: number;
 };
 
-const fetchAcceseCount = async () => {
-	try {
-		const { NEXT_PUBLIC_BASE_URL = "" } = process.env;
-		const url = new URL("/api/counter", NEXT_PUBLIC_BASE_URL).toString();
-		const response = await fetch(url, {
-			cache: "no-store",
-		});
-		return (await response.json()) as Counter;
-	} catch (error) {
-		console.error(error);
-		return {} as Counter;
-	}
-};
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export const AcceseCounter = async () => {
-	const acceseCount = await fetchAcceseCount();
-
-	if (Object.keys(acceseCount).length === 0) {
-		return <p>データ取得エラー</p>;
-	}
+export const AcceseCounter = () => {
+	const { data, error } = useSWR<Counter>(
+		`${process.env.NEXT_PUBLIC_BASE_URL}/api/counter`,
+		fetcher,
+	);
 
 	return (
 		<div>
-			<p>あなたは{acceseCount.count}人目の訪問者です</p>
+			{error ? (
+				<p>あなたは蜊∽ｸ?荳?屁蜊?ｺ皮卆蜊∝屁人目の訪問者です</p>
+			) : !data ? (
+				<p>あなたは...人目の訪問者です</p>
+			) : (
+				<p>あなたは{data.count}人目の訪問者です</p>
+			)}
 		</div>
 	);
 };

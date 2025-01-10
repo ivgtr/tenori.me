@@ -14,9 +14,12 @@ export const PageLink = () => {
 				</Link>
 			</li>
 			<li>
-				<a href="/tools" className={clsx("hover:underline", "text-blue-500")}>
+				<Link
+					href="/tools"
+					className={clsx("hover:underline", "text-blue-500")}
+				>
 					tools
-				</a>
+				</Link>
 			</li>
 		</ul>
 	);
