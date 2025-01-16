@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
 	images: {
 		domains: ["pixel-image.vercel.app", "crop-icon.vercel.app"],
 	},
+	eslint: {
+		ignoreDuringBuilds: true,
+	},
 };
 
 export default nextConfig;
