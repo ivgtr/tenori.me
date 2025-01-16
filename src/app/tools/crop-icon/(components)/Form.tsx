@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Pattern } from "./Preview";
+import { useEffect, useState } from "react";
+import type { Pattern } from "./ClopIcon";
 
 type Props = {
 	defaultImageUrl: string;

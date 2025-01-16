@@ -1,15 +1,15 @@
 import clsx from "clsx";
 import { Header } from "@/components/Header";
-import Preview from "./(components)/Preview";
+import { ClopIcon } from "./(components)/ClopIcon";
 
-export default function ClopIcon() {
+export default function ClopIconPage() {
 	return (
 		<div>
 			<Header to="/tools" />
 			<main>
 				<h2>画像を切り抜くやつ</h2>
 				<section>
-					<Preview />
+					<ClopIcon />
 				</section>
 				<section>
 					<h3>使い方</h3>

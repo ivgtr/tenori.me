@@ -1,15 +1,15 @@
 import clsx from "clsx";
-import Preview from "./(components)/Preview";
 import { Header } from "@/components/Header";
+import { PixelImage } from "./(components)/PixelImage";
 
-export default function PixelImage() {
+export default function PixelImagePage() {
 	return (
 		<div>
 			<Header to="/tools" />
 			<main>
 				<h2>画像をドット風にする</h2>
 				<section>
-					<Preview />
+					<PixelImage />
 				</section>
 				<section>
 					<h3>使い方</h3>
