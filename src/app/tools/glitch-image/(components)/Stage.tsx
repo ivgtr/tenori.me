@@ -1,3 +1,4 @@
+import { Button } from "@/components/Button";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDrop } from "react-use";
 
@@ -234,27 +235,20 @@ export const Stage = ({ mode, splitHeight = 40 }: Props) => {
 					)}
 				</div>
 			</div>
-			<div className="flex gap-4">
-				<button
-					onClick={resetImage}
-					className="block w-36 px-4 py-2 mt-4 text-white bg-gray-500 rounded-lg disabled:opacity-50"
-					disabled={!image}
-				>
+			<div className="flex gap-4 mt-4">
+				<Button onClick={resetImage} className="bg-gray-500" disabled={!image}>
 					リセット
-				</button>
-				<button
+				</Button>
+				<Button
 					onClick={downloadImage}
-					className="block w-36 px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg disabled:opacity-50"
+					className="bg-blue-500"
 					disabled={!image}
 				>
 					ダウンロード
-				</button>
-				<button
-					onClick={deleteImage}
-					className="block w-36 px-4 py-2 mt-4 text-white bg-red-500 rounded-lg"
-				>
+				</Button>
+				<Button onClick={deleteImage} className="bg-red-500">
 					消去
-				</button>
+				</Button>
 			</div>
 		</div>
 	);

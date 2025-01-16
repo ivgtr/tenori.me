@@ -14,6 +14,14 @@ const tools = [
 		name: "画像をマウスでグリッチする",
 		url: "/tools/glitch-image",
 	},
+	{
+		name: "画像をbase64にする",
+		url: "/tools/image-to-base64",
+	},
+	{
+		name: "横書きの内容を縦書きするやつ",
+		url: "/tools/tategaki",
+	},
 ];
 
 export const ToolsContent = async () => {
