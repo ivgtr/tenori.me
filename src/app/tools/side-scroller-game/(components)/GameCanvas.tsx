@@ -98,80 +98,80 @@ export const GameCanvas = ({ gameState }: GameCanvasProps) => {
       
       const screenX = (element.x - viewportX) * scaleX;
       const scaledSize = element.scale * Math.min(scaleX, scaleY);
-        const getColor = (type: string, theme: string): string => {
-          return THEME_COLORS.elements[theme as keyof typeof THEME_COLORS.elements]?.[type as keyof (typeof THEME_COLORS.elements)[keyof typeof THEME_COLORS.elements]] || "#8B4513";
-        };
-        const color = element.color || getColor(element.type, gameState.currentTheme);
-        ctx.fillStyle = color;
-        
-        switch (element.type) {
-          case 'tree':
-            ctx.fillStyle = "#8B4513";
-            ctx.fillRect(screenX, element.y * scaleY, 8 * scaledSize, 25 * scaledSize);
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX - 10 * scaledSize, element.y * scaleY - 15 * scaledSize, 28 * scaledSize, 20 * scaledSize);
-            break;
-            
-          case 'bush':
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX, element.y * scaleY, 20 * scaledSize, 12 * scaledSize);
-            break;
-            
-          case 'rock':
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX, element.y * scaleY, 15 * scaledSize, 10 * scaledSize);
-            break;
-            
-          case 'mountain':
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX, element.y * scaleY, 40 * scaledSize, 30 * scaledSize);
-            break;
-            
-          case 'building':
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX, element.y * scaleY, 25 * scaledSize, 50 * scaledSize);
-            break;
-            
-          case 'cloud':
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX, element.y * scaleY, 30 * scaledSize, 15 * scaledSize);
-            break;
-            
-          case 'flower':
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX, element.y * scaleY, 6 * scaledSize, 6 * scaledSize);
-            break;
-            
-          case 'cactus':
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX, element.y * scaleY, 8 * scaledSize, 25 * scaledSize);
-            ctx.fillRect(screenX - 3 * scaledSize, element.y * scaleY + 8 * scaledSize, 6 * scaledSize, 4 * scaledSize);
-            ctx.fillRect(screenX + 5 * scaledSize, element.y * scaleY + 12 * scaledSize, 6 * scaledSize, 4 * scaledSize);
-            break;
-            
-          case 'crystal':
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX, element.y * scaleY, 12 * scaledSize, 18 * scaledSize);
-            break;
-            
-          case 'antenna':
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX, element.y * scaleY, 4 * scaledSize, 40 * scaledSize);
-            ctx.fillRect(screenX - 2 * scaledSize, element.y * scaleY, 8 * scaledSize, 4 * scaledSize);
-            break;
-            
-          case 'pole':
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX, element.y * scaleY, 6 * scaledSize, 30 * scaledSize);
-            break;
-            
-          case 'sign':
-            ctx.fillStyle = color;
-            ctx.fillRect(screenX, element.y * scaleY, 20 * scaledSize, 12 * scaledSize);
-            ctx.fillStyle = "#8B4513";
-            ctx.fillRect(screenX + 8 * scaledSize, element.y * scaleY + 12 * scaledSize, 4 * scaledSize, 15 * scaledSize);
-            break;
-        }
+      
+      const getColor = (type: string, theme: string): string => {
+        return THEME_COLORS.elements[theme as keyof typeof THEME_COLORS.elements]?.[type as keyof (typeof THEME_COLORS.elements)[keyof typeof THEME_COLORS.elements]] || "#8B4513";
+      };
+      const color = element.color || getColor(element.type, gameState.currentTheme);
+      ctx.fillStyle = color;
+      
+      switch (element.type) {
+        case 'tree':
+          ctx.fillStyle = "#8B4513";
+          ctx.fillRect(screenX, element.y * scaleY, 8 * scaledSize, 25 * scaledSize);
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX - 10 * scaledSize, element.y * scaleY - 15 * scaledSize, 28 * scaledSize, 20 * scaledSize);
+          break;
+          
+        case 'bush':
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX, element.y * scaleY, 20 * scaledSize, 12 * scaledSize);
+          break;
+          
+        case 'rock':
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX, element.y * scaleY, 15 * scaledSize, 10 * scaledSize);
+          break;
+          
+        case 'mountain':
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX, element.y * scaleY, 40 * scaledSize, 30 * scaledSize);
+          break;
+          
+        case 'building':
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX, element.y * scaleY, 25 * scaledSize, 50 * scaledSize);
+          break;
+          
+        case 'cloud':
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX, element.y * scaleY, 30 * scaledSize, 15 * scaledSize);
+          break;
+          
+        case 'flower':
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX, element.y * scaleY, 6 * scaledSize, 6 * scaledSize);
+          break;
+          
+        case 'cactus':
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX, element.y * scaleY, 8 * scaledSize, 25 * scaledSize);
+          ctx.fillRect(screenX - 3 * scaledSize, element.y * scaleY + 8 * scaledSize, 6 * scaledSize, 4 * scaledSize);
+          ctx.fillRect(screenX + 5 * scaledSize, element.y * scaleY + 12 * scaledSize, 6 * scaledSize, 4 * scaledSize);
+          break;
+          
+        case 'crystal':
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX, element.y * scaleY, 12 * scaledSize, 18 * scaledSize);
+          break;
+          
+        case 'antenna':
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX, element.y * scaleY, 4 * scaledSize, 40 * scaledSize);
+          ctx.fillRect(screenX - 2 * scaledSize, element.y * scaleY, 8 * scaledSize, 4 * scaledSize);
+          break;
+          
+        case 'pole':
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX, element.y * scaleY, 6 * scaledSize, 30 * scaledSize);
+          break;
+          
+        case 'sign':
+          ctx.fillStyle = color;
+          ctx.fillRect(screenX, element.y * scaleY, 20 * scaledSize, 12 * scaledSize);
+          ctx.fillStyle = "#8B4513";
+          ctx.fillRect(screenX + 8 * scaledSize, element.y * scaleY + 12 * scaledSize, 4 * scaledSize, 15 * scaledSize);
+          break;
       }
     });
     
