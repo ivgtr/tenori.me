@@ -88,13 +88,15 @@
 	font-size: 12px;
 	line-height: 1.0;
 	letter-spacing: 0;
-	white-space: nowrap;
-	overflow-x: hidden;
+	white-space: pre;
+	overflow-x: auto;
 	max-width: 100%;
 }
 
 .aa-line {
-	height: 12px;
+	margin: 0;
+	padding: 0;
+	line-height: 1.0;
 	white-space: pre;
 	font-feature-settings: "kern" 0;
 	text-rendering: optimizeSpeed;

@@ -6,54 +6,52 @@ interface AACharacterProps {
 export const AACharacter = ({ character = "mona", className = "" }: AACharacterProps) => {
   const characters = {
     mona: [
-      "  ∧_∧",
-      " ( ´∀`)",
-      " (   )",
-      " | | |",
-      "(__)_)"
+      "     ∧_∧",
+      "   （ ´∀｀）",
+      "   （　　　）",
+      "    ｜ ｜ |",
+      "   （＿_)＿）"
     ],
 
     yaruo: [
-      "   ____",
-      "  /   \\",
-      " / ─  ─ \\",
-      "/  (●) (●) \\",
-      "|  (__人__) |",
-      "\\  ` ⌒´ /",
-      " ノ     \\"
+      "    ＿＿＿_",
+      "   ／　　　 ＼",
+      "  ／ ─　　─ ＼",
+      " ／　 （●） （●） ＼",
+      " |　　　（__人__）　 |",
+      " ＼　　 ｀ ⌒´　　／",
+      "　／l　　　　　　　 ヽ"
     ],
 
     shii: [
-      "  ∧ ∧   /￣￣￣￣",
-      " ( ﾟдﾟ)  < しぃ",
-      "_| ⊃/(_ \\____",
-      "/ └-(__/",
-      "<_/<_/"
+      "   ∧ ∧",
+      "  （*ﾟーﾟ)",
+      " ～(　_uuノ"
     ],
 
     giko: [
-      "  ∧∧",
-      " (,,ﾟДﾟ) /￣￣￣￣￣",
-      " ⊂  ⊃ < ぎこちゃん", 
-      "~|  |  \\____",
-      " しＪ"
+      "   ∧∧",
+      "  （,,ﾟДﾟ）",
+      "  ⊂　　⊃",
+      " ～|　　|",
+      "   しＪ"
     ],
 
     morara: [
-      "  /⌒ヽ",
-      " ( ^ω^) おっ",
-      " o_,__,o",
-      "  /  /~",
-      " と__)_)"
+      "   ／⌒ヽ",
+      "  （ ＾ω＾）",
+      "  o_,__,o",
+      "   /　 /~",
+      "  と__)_)"
     ]
   };
 
   return (
     <div className={`aa-text ${className}`}>
       {characters[character].map((line, index) => (
-        <div key={index} className="aa-line">
+        <pre key={index} className="aa-line m-0">
           {line}
-        </div>
+        </pre>
       ))}
     </div>
   );
