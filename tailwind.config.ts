@@ -13,6 +13,9 @@ export default {
 				background: "var(--background)",
 				foreground: "var(--foreground)",
 			},
+			fontFamily: {
+				'mono': ['var(--font-aahub)', 'ui-monospace', 'SFMono-Regular', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+			},
 			animation: {
 				"fade-in": "fade-in 0.3s ease-in-out backwards",
 			},

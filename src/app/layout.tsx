@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { marumonica } from "../styles/fonts";
+import { marumonica, aahub } from "../styles/fonts";
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="ja">
-			<body className={`${marumonica.variable} retro-site`}>
+			<body className={`${marumonica.variable} ${aahub.variable} retro-site`}>
 				<RetroBackground />
 				{children}
 			</body>
