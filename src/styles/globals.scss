@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
+	--accent: #00ffff;
+	--accent-dark: #0080ff;
 	--black: 15, 18, 25;
 	--gray: 96, 115, 159;
 	--gray-light: 229, 233, 240;
@@ -13,6 +13,101 @@
 	--white: 243, 244, 246;
 	--box-shadow: 0 2px 6px rgba(var(--gray), 25%),
 		0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%);
+}
+
+/* 90s Retro Animations */
+@keyframes marquee {
+	0% { transform: translateX(100%); }
+	100% { transform: translateX(-100%); }
+}
+
+@keyframes marquee-reverse {
+	0% { transform: translateX(-100%); }
+	100% { transform: translateX(100%); }
+}
+
+@keyframes blink-retro {
+	0%, 50% { opacity: 1; }
+	51%, 100% { opacity: 0; }
+}
+
+/* Retro Site Styling */
+.retro-site {
+	font-family: var(--font-marumonica), "MS Gothic", monospace !important;
+	cursor: crosshair;
+}
+
+.retro-site a,
+.retro-site button {
+	cursor: pointer;
+}
+
+.retro-site input,
+.retro-site textarea {
+	cursor: text;
+}
+
+.retro-layout {
+	min-height: 100vh;
+	position: relative;
+}
+
+/* 90s Style Background Patterns */
+.retro-bg-pattern {
+	background-color: #000033;
+	background-image: 
+		radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+		radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+		radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+		radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+	background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+	background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+}
+
+/* Alternative patterns - can be switched by changing class */
+.retro-bg-checkerboard {
+	background-color: #001122;
+	background-image: 
+		linear-gradient(45deg, rgba(0,255,255,0.1) 25%, transparent 25%), 
+		linear-gradient(-45deg, rgba(0,255,255,0.1) 25%, transparent 25%), 
+		linear-gradient(45deg, transparent 75%, rgba(0,255,255,0.1) 75%), 
+		linear-gradient(-45deg, transparent 75%, rgba(0,255,255,0.1) 75%);
+	background-size: 20px 20px;
+	background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.retro-bg-dots {
+	background-color: #000814;
+	background-image: radial-gradient(circle, rgba(0,255,255,0.3) 1px, transparent 1px);
+	background-size: 30px 30px;
+}
+
+/* AA (ASCII Art) Styles */
+.aa-text {
+	font-family: 'MS Gothic', 'ＭＳ ゴシック', monospace;
+	font-size: 12px;
+	line-height: 1.0;
+	letter-spacing: 0;
+	white-space: nowrap;
+	overflow-x: hidden;
+	max-width: 100%;
+}
+
+.aa-line {
+	height: 12px;
+	white-space: pre;
+	font-feature-settings: "kern" 0;
+	text-rendering: optimizeSpeed;
+	overflow: hidden;
+	text-overflow: clip;
+}
+
+/* Fallback for browsers without MS Gothic */
+@supports not (font-family: 'MS Gothic') {
+	.aa-text {
+		font-family: 'Courier New', 'Courier', monospace;
+		font-size: 11px;
+	}
 }
 
 html {
