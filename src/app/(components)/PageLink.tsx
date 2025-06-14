@@ -4,7 +4,7 @@ import Link from "next/link";
 export const PageLink = () => {
 	return (
 		<ul className="list">
-			<li>
+			{/* <li>
 				<Link
 					href="/articles"
 					data-astro-prefetch="viewport"
@@ -12,7 +12,7 @@ export const PageLink = () => {
 				>
 					articles
 				</Link>
-			</li>
+			</li> */}
 			<li>
 				<Link
 					href="/tools"
