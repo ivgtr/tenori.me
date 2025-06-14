@@ -109,32 +109,21 @@ export const ToolsContent = async () => {
 				</div>
 			))}
 
-			{/* 懐かしのネタ */}
-			<div className="border-2 border-yellow-300 bg-gray-900 p-4">
-				<div className="text-center">
-					<div className="text-yellow-300 font-bold mb-2">
-						🌟 アクセス解析 🌟
-					</div>
-					<div className="text-sm text-green-300 space-y-1">
-						<div>今日: <span className="text-cyan-400">42</span>人</div>
-						<div>昨日: <span className="text-cyan-400">37</span>人</div>
-						<div>累計: <span className="text-cyan-400">999999</span>人</div>
-						<div className="text-xs text-gray-400 mt-2">
-							※ 数字は適当です
-						</div>
-					</div>
-				</div>
-			</div>
-
 			{/* 更新履歴風 */}
 			<div className="border border-gray-600 bg-gray-800 p-4">
 				<div className="text-green-400 font-bold mb-3 border-b border-gray-600 pb-1">
-					📝 更新履歴
+					📝 ツール更新履歴
 				</div>
 				<div className="text-sm space-y-1">
-					<div><span className="text-cyan-400">2025/01/15</span> - ツールページをレトロ風に変更</div>
-					<div><span className="text-cyan-400">2024/12/XX</span> - 横スクロールゲーム追加</div>
-					<div><span className="text-cyan-400">2024/XX/XX</span> - その他いろいろ</div>
+					<div><span className="text-cyan-400">2025/06/15</span> - ツールページをレトロ風にリデザイン</div>
+					<div><span className="text-cyan-400">2025/06/15</span> - 横スクロール2Dアクションゲーム追加</div>
+					<div><span className="text-cyan-400">2025/06/15</span> - グリッチ画像ツールのマウス操作改善</div>
+					<div><span className="text-cyan-400">2025/06/14</span> - Xキャラクタープロンプト生成ツール追加</div>
+					<div><span className="text-cyan-400">2025/01/16</span> - 画像をbase64にするツール追加</div>
+					<div><span className="text-cyan-400">2025/01/16</span> - 縦書き変換ツール追加</div>
+					<div><span className="text-cyan-400">2025/01/16</span> - グリッチ画像ツール追加</div>
+					<div><span className="text-cyan-400">2025/01/09</span> - 2D迷路ゲーム追加</div>
+					<div><span className="text-cyan-400">2025/01/04</span> - 画像切り抜きツール追加</div>
 					<div className="text-gray-500">...</div>
 				</div>
 			</div>
