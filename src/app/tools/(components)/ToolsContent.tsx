@@ -26,6 +26,10 @@ const tools = [
 		name: "Xキャラクタープロンプト生成",
 		url: "/tools/x-character-prompt-generator",
 	},
+	{
+		name: "横スクロール2Dアクションゲーム",
+		url: "/tools/side-scroller-game",
+	},
 ];
 
 export const ToolsContent = async () => {
