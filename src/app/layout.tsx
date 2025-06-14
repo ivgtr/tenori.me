@@ -6,6 +6,7 @@ config.autoAddCss = false;
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "@/styles/globals.scss";
 import { RetroBackground } from "@/components/retro/RetroBackground";
+import { KonamiProvider } from "@/components/retro/KonamiProvider";
 
 export const metadata: Metadata = {
 	title: "tenori.me - 個人サイト",
@@ -20,8 +21,10 @@ export default function RootLayout({
 	return (
 		<html lang="ja">
 			<body className={`${marumonica.variable} ${aahub.variable} retro-site`}>
-				<RetroBackground />
-				{children}
+				<KonamiProvider>
+					<RetroBackground />
+					{children}
+				</KonamiProvider>
 			</body>
 		</html>
 	);
