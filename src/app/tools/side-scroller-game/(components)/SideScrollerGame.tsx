@@ -55,12 +55,17 @@ export const SideScrollerGame = () => {
           <span>テーマ: {getThemeDisplayName(gameState.currentTheme)}</span>
           <span>難易度: {gameState.difficulty}</span>
           <span>ベース速度: {getBaseSpeedForScore(gameState.score).toFixed(1)}</span>
-          <span className="text-sm">FPS: {fps}</span>
           {gameState.gameOver && <span className="text-red-500 font-bold">ゲームオーバー</span>}
         </div>
       </div>
 
-      <GameCanvas gameState={gameState} />
+      <div className="relative">
+        <GameCanvas gameState={gameState} />
+        {/* FPS メーター */}
+        <div className="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded font-mono">
+          {fps} FPS
+        </div>
+      </div>
 
       {!gameState.isPlaying && !gameState.gameOver && (
         <div className="text-center">
