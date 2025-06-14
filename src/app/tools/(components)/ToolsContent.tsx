@@ -22,6 +22,10 @@ const tools = [
 		name: "横書きの内容を縦書きするやつ",
 		url: "/tools/tategaki",
 	},
+	{
+		name: "Xキャラクタープロンプト生成",
+		url: "/tools/x-character-prompt-generator",
+	},
 ];
 
 export const ToolsContent = async () => {
