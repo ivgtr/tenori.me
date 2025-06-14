@@ -18,18 +18,28 @@ export const RetroMidiPlayer = () => {
   const tracks: Track[] = [
     {
       name: "BGM001.mid",
-      notes: [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25], // C major scale
-      tempo: 500
-    },
-    {
-      name: "BGM002.mid", 
-      notes: [440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880.00], // A major scale
+      notes: [277.18, 311.13, 369.99, 415.30, 277.18, 311.13, 369.99, 415.30, 277.18, 369.99, 415.30, 466.16, 415.30, 369.99, 311.13], // Rockman inspired melody (shifted +1 semitone)
       tempo: 300
     },
     {
+      name: "BGM002.mid", 
+      notes: [277.18, 277.18, 0, 277.18, 0, 261.63, 277.18, 0, 311.13, 0, 0, 0, 155.56, 0, 0, 0], // Super Mario Bros inspired (shifted +1 semitone, 0 = rest)
+      tempo: 200
+    },
+    {
       name: "BGM003.mid",
-      notes: [329.63, 369.99, 415.30, 440.00, 493.88, 554.37, 622.25, 659.25], // E major scale
-      tempo: 400
+      notes: [311.13, 369.99, 415.30, 466.16, 415.30, 369.99, 311.13, 261.63, 293.66, 329.63, 369.99, 415.30, 369.99, 329.63, 293.66, 261.63], // Dragon Quest inspired overture (shifted +1 semitone)
+      tempo: 350
+    },
+    {
+      name: "BGM004.mid",
+      notes: [261.63, 293.66, 311.13, 349.23, 329.63, 369.99, 415.30, 466.16, 415.30, 369.99, 329.63, 311.13], // FF prelude inspired (shifted +1 semitone)
+      tempo: 450
+    },
+    {
+      name: "BGM005.mid",
+      notes: [369.99, 415.30, 466.16, 369.99, 415.30, 466.16, 369.99, 415.30, 466.16, 523.25, 466.16, 415.30, 369.99], // Zelda main theme inspired (shifted +1 semitone)
+      tempo: 280
     }
   ];
 
@@ -71,7 +81,10 @@ export const RetroMidiPlayer = () => {
 
       intervalRef.current = setInterval(() => {
         if (noteIndex < currentTrack.notes.length) {
-          playNote(currentTrack.notes[noteIndex]);
+          const note = currentTrack.notes[noteIndex];
+          if (note > 0) { // Only play if not a rest (0)
+            playNote(note);
+          }
           noteIndex++;
         } else {
           noteIndex = 0; // Loop the track
