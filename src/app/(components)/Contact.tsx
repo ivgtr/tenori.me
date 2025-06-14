@@ -13,8 +13,8 @@ import { BlinkingText } from "@/components/retro/BlinkingText";
 const accounts = [
 	{
 		title: "Twitter",
-		alt: "mawaru_hana",
-		url: "https://twitter.com/mawaru_hana",
+		alt: "ivgtr",
+		url: "https://twitter.com/ivgtr",
 		icon: faTwitter,
 		color: "bg-blue-400",
 		emoji: "🐦"
