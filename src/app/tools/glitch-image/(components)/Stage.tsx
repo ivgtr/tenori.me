@@ -107,6 +107,81 @@ export const Stage = ({ mode, splitHeight = 40 }: Props) => {
 		setImage(null);
 	}, [getCavas]);
 
+	const applyRandomGlitch = useCallback(() => {
+		if (!originImageDataRef.current) return;
+		
+		const { canvas, ctx } = getCavas();
+		const imageData = originImageDataRef.current;
+		const width = canvas.width;
+		const height = canvas.height;
+		
+		// 元画像をコピー
+		const cloneImageData = ctx.createImageData(imageData);
+		cloneImageData.data.set(imageData.data);
+		
+		// ランダムグリッチポイントを生成（3-7箇所）
+		const numGlitches = Math.floor(Math.random() * 5) + 3;
+		
+		for (let g = 0; g < numGlitches; g++) {
+			const y = Math.floor(Math.random() * (height - 50));
+			const glitchHeight = Math.floor(Math.random() * 35) + 5; // 5-40px
+			
+			// R, G, Bチャンネルごとに異なるずらし量（画像幅の-15%〜+15%）
+			const shiftR = Math.floor((Math.random() - 0.5) * width * 0.3);
+			const shiftG = Math.floor((Math.random() - 0.5) * width * 0.3);
+			const shiftB = Math.floor((Math.random() - 0.5) * width * 0.3);
+			
+			// グリッチエリアの元データを保存
+			const originalData = new Uint8ClampedArray(cloneImageData.data);
+			
+			for (let row = y; row < Math.min(y + glitchHeight, height); row++) {
+				for (let x = 0; x < width; x++) {
+					const i = (row * width + x) * 4;
+					
+					// Rチャンネルをずらし
+					const dstXR = x + shiftR;
+					if (dstXR >= 0 && dstXR < width) {
+						const dstIR = (row * width + dstXR) * 4;
+						cloneImageData.data[dstIR + 0] = originalData[i + 0];
+					}
+					
+					// Gチャンネルをずらし
+					const dstXG = x + shiftG;
+					if (dstXG >= 0 && dstXG < width) {
+						const dstIG = (row * width + dstXG) * 4;
+						cloneImageData.data[dstIG + 1] = originalData[i + 1];
+					}
+					
+					// Bチャンネルをずらし
+					const dstXB = x + shiftB;
+					if (dstXB >= 0 && dstXB < width) {
+						const dstIB = (row * width + dstXB) * 4;
+						cloneImageData.data[dstIB + 2] = originalData[i + 2];
+					}
+				}
+			}
+		}
+		
+		// アルファチャンネルを修正
+		for (let i = 0; i < cloneImageData.data.length; i += 4) {
+			if (
+				cloneImageData.data[i + 0] ||
+				cloneImageData.data[i + 1] ||
+				cloneImageData.data[i + 2]
+			) {
+				cloneImageData.data[i + 3] = 255;
+			} else {
+				cloneImageData.data[i + 3] = 0;
+			}
+		}
+		
+		ctx.putImageData(cloneImageData, 0, 0);
+		
+		// 現在の状態を保存
+		const currentImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		prevImageDataRef.current = currentImageData;
+	}, [getCavas]);
+
 	const glitchImage = useCallback(
 		(shiftX: number) => {
 			if (!prevImageDataRef.current) return;
@@ -238,6 +313,13 @@ export const Stage = ({ mode, splitHeight = 40 }: Props) => {
 			<div className="flex gap-4 mt-4">
 				<Button onClick={resetImage} className="bg-gray-500" disabled={!image}>
 					リセット
+				</Button>
+				<Button
+					onClick={applyRandomGlitch}
+					className="bg-purple-500"
+					disabled={!image}
+				>
+					ランダムグリッチ
 				</Button>
 				<Button
 					onClick={downloadImage}
