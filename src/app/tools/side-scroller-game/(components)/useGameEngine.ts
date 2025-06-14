@@ -92,6 +92,7 @@ export const useGameEngine = () => {
 
 	const gameLoopRef = useRef<number>(0);
 	const keysRef = useRef<Set<string>>(new Set());
+	const fpsRef = useRef({ lastTime: 0, frameCount: 0, fps: 60 });
 
 	const generateInitialStage = useCallback(() => {
 		const obstacles: GameState["obstacles"] = [];
@@ -175,6 +176,15 @@ export const useGameEngine = () => {
 	};
 
 	const gameLoop = useCallback(() => {
+		// FPS計測
+		const currentTime = performance.now();
+		fpsRef.current.frameCount++;
+		if (currentTime - fpsRef.current.lastTime >= 1000) {
+			fpsRef.current.fps = fpsRef.current.frameCount;
+			fpsRef.current.frameCount = 0;
+			fpsRef.current.lastTime = currentTime;
+		}
+		
 		setGameState((prev) => {
 			if (!prev.isPlaying || prev.gameOver) return prev;
 
@@ -317,18 +327,34 @@ export const useGameEngine = () => {
 				}
 			}
 
-			// 古い要素を削除
+			// 古い要素を削除（パフォーマンス最適化）
 			const cleanupThreshold = newState.camera.x - 200;
-			newState.obstacles = newState.obstacles.filter(
-				(obstacle) => obstacle.x + obstacle.width > cleanupThreshold,
-			);
-			newState.pits = newState.pits.filter(
-				(pit) => pit.x + pit.width > cleanupThreshold,
-			);
-			// 背景要素はより広い範囲で保持
-			newState.backgroundElements = newState.backgroundElements.filter(
-				(element) => element.x > newState.camera.x - 1000,
-			);
+			const bgCleanupThreshold = newState.camera.x - 1000;
+			
+			// 効率的な配列処理（filterよりも高速）
+			let obstacleIndex = 0;
+			for (let i = 0; i < newState.obstacles.length; i++) {
+				if (newState.obstacles[i].x + newState.obstacles[i].width > cleanupThreshold) {
+					newState.obstacles[obstacleIndex++] = newState.obstacles[i];
+				}
+			}
+			newState.obstacles.length = obstacleIndex;
+			
+			let pitIndex = 0;
+			for (let i = 0; i < newState.pits.length; i++) {
+				if (newState.pits[i].x + newState.pits[i].width > cleanupThreshold) {
+					newState.pits[pitIndex++] = newState.pits[i];
+				}
+			}
+			newState.pits.length = pitIndex;
+			
+			let bgIndex = 0;
+			for (let i = 0; i < newState.backgroundElements.length; i++) {
+				if (newState.backgroundElements[i].x > bgCleanupThreshold) {
+					newState.backgroundElements[bgIndex++] = newState.backgroundElements[i];
+				}
+			}
+			newState.backgroundElements.length = bgIndex;
 
 			// Collision detection with obstacles
 			for (const obstacle of newState.obstacles) {
@@ -395,6 +421,15 @@ export const useGameEngine = () => {
 		};
 	}, [gameState.isPlaying, gameState.gameOver, startGame, resetGame]);
 
+	const gameLoopCallback = useCallback(() => {
+		if (!gameState.isPlaying || gameState.gameOver) {
+			gameLoopRef.current = 0;
+			return;
+		}
+		gameLoop();
+		gameLoopRef.current = requestAnimationFrame(gameLoopCallback);
+	}, [gameState.isPlaying, gameState.gameOver, gameLoop]);
+
 	useEffect(() => {
 		if (!gameState.isPlaying || gameState.gameOver) {
 			if (gameLoopRef.current) {
@@ -404,12 +439,7 @@ export const useGameEngine = () => {
 			return;
 		}
 
-		const runGameLoop = () => {
-			gameLoop();
-			gameLoopRef.current = requestAnimationFrame(runGameLoop);
-		};
-
-		gameLoopRef.current = requestAnimationFrame(runGameLoop);
+		gameLoopRef.current = requestAnimationFrame(gameLoopCallback);
 
 		return () => {
 			if (gameLoopRef.current) {
@@ -417,7 +447,7 @@ export const useGameEngine = () => {
 				gameLoopRef.current = 0;
 			}
 		};
-	}, [gameState.isPlaying, gameState.gameOver, gameLoop]);
+	}, [gameState.isPlaying, gameState.gameOver, gameLoopCallback]);
 
 	const jump = useCallback(() => {
 		setGameState((prev) => {
@@ -479,5 +509,6 @@ export const useGameEngine = () => {
 		jump,
 		slowDown,
 		speedUp,
+		fps: fpsRef.current.fps,
 	};
 };

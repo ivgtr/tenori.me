@@ -25,7 +25,7 @@ const getBaseSpeedForScore = (score: number): number => {
 };
 
 export const SideScrollerGame = () => {
-  const { gameState, startGame, resetGame, jump, slowDown, speedUp } = useGameEngine();
+  const { gameState, startGame, resetGame, jump, slowDown, speedUp, fps } = useGameEngine();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -55,6 +55,7 @@ export const SideScrollerGame = () => {
           <span>テーマ: {getThemeDisplayName(gameState.currentTheme)}</span>
           <span>難易度: {gameState.difficulty}</span>
           <span>ベース速度: {getBaseSpeedForScore(gameState.score).toFixed(1)}</span>
+          <span className="text-sm">FPS: {fps}</span>
           {gameState.gameOver && <span className="text-red-500 font-bold">ゲームオーバー</span>}
         </div>
       </div>

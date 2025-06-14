@@ -88,12 +88,16 @@ export const GameCanvas = ({ gameState }: GameCanvasProps) => {
     const scaleX = canvasDimensions.width / GAME_CONSTANTS.CANVAS_WIDTH;
     const scaleY = canvasDimensions.height / GAME_CONSTANTS.CANVAS_HEIGHT;
     
-    // Draw background elements (simple objects, no parallax)
+    // Draw background elements (simple objects, no parallax) - optimized viewport culling
+    const leftBound = viewportX - 200;
+    const rightBound = viewportX + canvasDimensions.width / scaleX + 200;
+    
     gameState.backgroundElements.forEach((element) => {
+      // Early viewport culling for better performance
+      if (element.x < leftBound || element.x > rightBound) return;
+      
       const screenX = (element.x - viewportX) * scaleX;
       const scaledSize = element.scale * Math.min(scaleX, scaleY);
-      
-      if (screenX > -100 * scaleX && screenX < canvasDimensions.width + 100 * scaleX) {
         const getColor = (type: string, theme: string): string => {
           return THEME_COLORS.elements[theme as keyof typeof THEME_COLORS.elements]?.[type as keyof (typeof THEME_COLORS.elements)[keyof typeof THEME_COLORS.elements]] || "#8B4513";
         };
