@@ -121,11 +121,13 @@ export const AudioPlayerWindow = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [playMode, setPlayMode] = useState<PlayMode>("sequential");
+  const [volume, setVolume] = useState(3);
   const [visualizerBars, setVisualizerBars] = useState<number[]>(Array(12).fill(2));
   const audioContextRef = useRef<AudioContext | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const vizIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const playModeRef = useRef<PlayMode>("sequential");
+  const volumeRef = useRef(3);
 
   const createAudioContext = () => {
     if (!audioContextRef.current) {
@@ -143,7 +145,8 @@ export const AudioPlayerWindow = () => {
     gain.connect(ctx.destination);
     osc.frequency.setValueAtTime(frequency, ctx.currentTime);
     osc.type = "square";
-    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+    const vol = volumeRef.current * 0.02;
+    gain.gain.setValueAtTime(vol, ctx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
     osc.start(ctx.currentTime);
     osc.stop(ctx.currentTime + duration);
@@ -218,6 +221,14 @@ export const AudioPlayerWindow = () => {
 
   const playModeLabel = playMode === "repeat-one" ? "RPT1" : playMode === "shuffle" ? "SHFL" : "LIST";
 
+  const handleVolumeChange = (delta: number) => {
+    setVolume((prev) => {
+      const next = Math.max(0, Math.min(5, prev + delta));
+      volumeRef.current = next;
+      return next;
+    });
+  };
+
   const stopAndSwitch = (next: number) => {
     if (isPlaying) {
       setIsPlaying(false);
@@ -278,6 +289,13 @@ export const AudioPlayerWindow = () => {
         >
           {playModeLabel}
         </button>
+      </div>
+      <div className="os-audio-volume">
+        <button className="os-audio-btn os-audio-btn-vol" onClick={() => handleVolumeChange(-1)} title="音量下げる">-</button>
+        <span className="os-audio-volume-bar">
+          {"".padStart(volume, "\u2588").padEnd(5, "\u2591")}
+        </span>
+        <button className="os-audio-btn os-audio-btn-vol" onClick={() => handleVolumeChange(1)} title="音量上げる">+</button>
       </div>
     </div>
   );

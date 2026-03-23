@@ -15,9 +15,11 @@ export const RetroMidiPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [playMode, setPlayMode] = useState<PlayMode>("sequential");
+  const [volume, setVolume] = useState(3);
   const audioContextRef = useRef<AudioContext | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const playModeRef = useRef<PlayMode>("sequential");
+  const volumeRef = useRef(3);
 
   const tracks: Track[] = [
     {
@@ -144,7 +146,8 @@ export const RetroMidiPlayer = () => {
     oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
     oscillator.type = 'square'; // 8-bit style sound
     
-    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+    const vol = volumeRef.current * 0.02;
+    gainNode.gain.setValueAtTime(vol, audioContext.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
     
     oscillator.start(audioContext.currentTime);
@@ -223,6 +226,14 @@ export const RetroMidiPlayer = () => {
     playModeRef.current = nextMode;
   };
 
+  const handleVolumeChange = (delta: number) => {
+    setVolume((prev) => {
+      const next = Math.max(0, Math.min(5, prev + delta));
+      volumeRef.current = next;
+      return next;
+    });
+  };
+
   const handlePrevTrack = () => {
     if (isPlaying) {
       setIsPlaying(false);
@@ -283,6 +294,14 @@ export const RetroMidiPlayer = () => {
         >
           {playMode === "repeat-one" ? "RPT1" : playMode === "shuffle" ? "SHFL" : "LIST"}
         </RetroButton>
+      </div>
+
+      <div className="flex justify-center items-center gap-2 mb-2">
+        <RetroButton size="small" variant="secondary" onClick={() => handleVolumeChange(-1)}>-</RetroButton>
+        <span className="font-mono text-xs text-green-400">
+          {"█".repeat(volume)}{"░".repeat(5 - volume)}
+        </span>
+        <RetroButton size="small" variant="secondary" onClick={() => handleVolumeChange(1)}>+</RetroButton>
       </div>
 
       <div className="text-xs text-gray-400 text-center font-mono">
