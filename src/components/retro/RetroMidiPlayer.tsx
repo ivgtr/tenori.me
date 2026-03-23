@@ -27,6 +27,10 @@ export const RetroMidiPlayer = () => {
         830.61, 0, 0, 0, 415.30, 0, 0, 0,
         554.37, 0, 0, 415.30, 0, 0, 349.23, 0,
         466.16, 0, 622.25, 0, 587.33, 554.37, 0, 698.46,
+        0, 830.61, 0, 880.00, 0, 739.99, 830.61, 0,
+        739.99, 0, 554.37, 0, 622.25, 466.16, 0, 415.30,
+        349.23, 0, 0, 554.37, 0, 0, 415.30, 0,
+        0, 349.23, 0, 466.16, 0, 622.25, 0, 0,
       ],
       tempo: 200
     },
@@ -165,7 +169,7 @@ export const RetroMidiPlayer = () => {
     const track = tracks[trackIndex];
     let noteIndex = 0;
     let loopCount = 0;
-    const maxLoops = 2;
+    const maxLoops = 1;
 
     intervalRef.current = setInterval(() => {
       if (noteIndex < track.notes.length) {
