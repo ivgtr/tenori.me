@@ -9,11 +9,15 @@ interface Track {
   tempo: number;
 }
 
+type PlayMode = "sequential" | "repeat-one" | "shuffle";
+
 export const RetroMidiPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [playMode, setPlayMode] = useState<PlayMode>("sequential");
   const audioContextRef = useRef<AudioContext | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const playModeRef = useRef<PlayMode>("sequential");
 
   const tracks: Track[] = [
     {
@@ -93,6 +97,20 @@ export const RetroMidiPlayer = () => {
     oscillator.stop(audioContext.currentTime + duration);
   };
 
+  const getNextTrackIndex = (currentIndex: number): number => {
+    const mode = playModeRef.current;
+    if (mode === "repeat-one") return currentIndex;
+    if (mode === "shuffle") {
+      if (tracks.length <= 1) return 0;
+      let next: number;
+      do {
+        next = Math.floor(Math.random() * tracks.length);
+      } while (next === currentIndex);
+      return next;
+    }
+    return currentIndex < tracks.length - 1 ? currentIndex + 1 : 0;
+  };
+
   const startPlayback = (trackIndex: number) => {
     const track = tracks[trackIndex];
     let noteIndex = 0;
@@ -107,7 +125,7 @@ export const RetroMidiPlayer = () => {
       } else {
         loopCount++;
         if (loopCount >= maxLoops) {
-          const nextIndex = trackIndex < tracks.length - 1 ? trackIndex + 1 : 0;
+          const nextIndex = getNextTrackIndex(trackIndex);
           clearInterval(intervalRef.current!);
           intervalRef.current = null;
           setCurrentTrackIndex(nextIndex);
@@ -144,6 +162,13 @@ export const RetroMidiPlayer = () => {
     };
   }, []);
 
+  const cyclePlayMode = () => {
+    const modes: PlayMode[] = ["sequential", "repeat-one", "shuffle"];
+    const nextMode = modes[(modes.indexOf(playMode) + 1) % modes.length];
+    setPlayMode(nextMode);
+    playModeRef.current = nextMode;
+  };
+
   const handlePrevTrack = () => {
     if (isPlaying) {
       setIsPlaying(false);
@@ -176,26 +201,33 @@ export const RetroMidiPlayer = () => {
       </div>
 
       <div className="flex justify-center gap-2 mb-2">
-        <RetroButton 
-          size="small" 
+        <RetroButton
+          size="small"
           variant="secondary"
           onClick={handlePrevTrack}
         >
           ⏮
         </RetroButton>
-        <RetroButton 
-          size="small" 
+        <RetroButton
+          size="small"
           variant="secondary"
           onClick={handlePlay}
         >
           {isPlaying ? "⏸" : "▶"}
         </RetroButton>
-        <RetroButton 
-          size="small" 
+        <RetroButton
+          size="small"
           variant="secondary"
           onClick={handleNextTrack}
         >
           ⏭
+        </RetroButton>
+        <RetroButton
+          size="small"
+          variant="secondary"
+          onClick={cyclePlayMode}
+        >
+          {playMode === "repeat-one" ? "🔂" : playMode === "shuffle" ? "🔀" : "🔁"}
         </RetroButton>
       </div>
 

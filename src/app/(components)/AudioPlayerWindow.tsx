@@ -61,13 +61,17 @@ const tracks: Track[] = [
   },
 ];
 
+type PlayMode = "sequential" | "repeat-one" | "shuffle";
+
 export const AudioPlayerWindow = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [playMode, setPlayMode] = useState<PlayMode>("sequential");
   const [visualizerBars, setVisualizerBars] = useState<number[]>(Array(12).fill(2));
   const audioContextRef = useRef<AudioContext | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const vizIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const playModeRef = useRef<PlayMode>("sequential");
 
   const createAudioContext = () => {
     if (!audioContextRef.current) {
@@ -91,6 +95,20 @@ export const AudioPlayerWindow = () => {
     osc.stop(ctx.currentTime + duration);
   };
 
+  const getNextTrackIndex = (currentIndex: number): number => {
+    const mode = playModeRef.current;
+    if (mode === "repeat-one") return currentIndex;
+    if (mode === "shuffle") {
+      if (tracks.length <= 1) return 0;
+      let next: number;
+      do {
+        next = Math.floor(Math.random() * tracks.length);
+      } while (next === currentIndex);
+      return next;
+    }
+    return currentIndex < tracks.length - 1 ? currentIndex + 1 : 0;
+  };
+
   const startPlayback = (trackIndex: number) => {
     const track = tracks[trackIndex];
     let noteIndex = 0;
@@ -105,8 +123,7 @@ export const AudioPlayerWindow = () => {
       } else {
         loopCount++;
         if (loopCount >= maxLoops) {
-          // Auto-advance to next track
-          const nextIndex = trackIndex < tracks.length - 1 ? trackIndex + 1 : 0;
+          const nextIndex = getNextTrackIndex(trackIndex);
           clearInterval(intervalRef.current!);
           intervalRef.current = null;
           setCurrentTrackIndex(nextIndex);
@@ -137,6 +154,15 @@ export const AudioPlayerWindow = () => {
       setVisualizerBars(Array(12).fill(2));
     }
   };
+
+  const cyclePlayMode = () => {
+    const modes: PlayMode[] = ["sequential", "repeat-one", "shuffle"];
+    const nextMode = modes[(modes.indexOf(playMode) + 1) % modes.length];
+    setPlayMode(nextMode);
+    playModeRef.current = nextMode;
+  };
+
+  const playModeIcon = playMode === "repeat-one" ? "\uD83D\uDD02" : playMode === "shuffle" ? "\uD83D\uDD00" : "\uD83D\uDD01";
 
   const stopAndSwitch = (next: number) => {
     if (isPlaying) {
@@ -188,6 +214,13 @@ export const AudioPlayerWindow = () => {
           onClick={() => stopAndSwitch(currentTrackIndex < tracks.length - 1 ? currentTrackIndex + 1 : 0)}
         >
           &#9197;
+        </button>
+        <button
+          className="os-audio-btn"
+          onClick={cyclePlayMode}
+          title={playMode === "repeat-one" ? "1曲リピート" : playMode === "shuffle" ? "シャッフル" : "順次再生"}
+        >
+          {playModeIcon}
         </button>
       </div>
     </div>
