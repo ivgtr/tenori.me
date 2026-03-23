@@ -1193,6 +1193,30 @@ ul.list {
 	color: var(--os-accent);
 }
 
+.os-audio-btn-mode {
+	font-size: 10px;
+	letter-spacing: 0.5px;
+}
+
+.os-audio-volume {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+}
+
+.os-audio-btn-vol {
+	width: 24px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.os-audio-volume-bar {
+	font-size: 11px;
+	letter-spacing: 1px;
+	color: var(--os-green);
+}
+
 /* Visitor Counter in StatusBar */
 .os-statusbar .os-visitor-count {
 	color: var(--os-green);
