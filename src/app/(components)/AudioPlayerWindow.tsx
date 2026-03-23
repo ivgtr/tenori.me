@@ -216,7 +216,7 @@ export const AudioPlayerWindow = () => {
     playModeRef.current = nextMode;
   };
 
-  const playModeIcon = playMode === "repeat-one" ? "\uD83D\uDD02" : playMode === "shuffle" ? "\uD83D\uDD00" : "\uD83D\uDD01";
+  const playModeLabel = playMode === "repeat-one" ? "RPT1" : playMode === "shuffle" ? "SHFL" : "LIST";
 
   const stopAndSwitch = (next: number) => {
     if (isPlaying) {
@@ -257,24 +257,26 @@ export const AudioPlayerWindow = () => {
         <button
           className="os-audio-btn"
           onClick={() => stopAndSwitch(currentTrackIndex > 0 ? currentTrackIndex - 1 : tracks.length - 1)}
+          title="前の曲"
         >
-          &#9198;
+          |&lt;
         </button>
-        <button className="os-audio-btn os-audio-btn-play" onClick={handlePlay}>
-          {isPlaying ? "\u23F8" : "\u25B6"}
+        <button className="os-audio-btn os-audio-btn-play" onClick={handlePlay} title={isPlaying ? "停止" : "再生"}>
+          {isPlaying ? "||" : "|>"}
         </button>
         <button
           className="os-audio-btn"
           onClick={() => stopAndSwitch(currentTrackIndex < tracks.length - 1 ? currentTrackIndex + 1 : 0)}
+          title="次の曲"
         >
-          &#9197;
+          &gt;|
         </button>
         <button
-          className="os-audio-btn"
+          className="os-audio-btn os-audio-btn-mode"
           onClick={cyclePlayMode}
           title={playMode === "repeat-one" ? "1曲リピート" : playMode === "shuffle" ? "シャッフル" : "順次再生"}
         >
-          {playModeIcon}
+          {playModeLabel}
         </button>
       </div>
     </div>

@@ -1193,6 +1193,11 @@ ul.list {
 	color: var(--os-accent);
 }
 
+.os-audio-btn-mode {
+	font-size: 10px;
+	letter-spacing: 0.5px;
+}
+
 /* Visitor Counter in StatusBar */
 .os-statusbar .os-visitor-count {
 	color: var(--os-green);

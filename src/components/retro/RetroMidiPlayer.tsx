@@ -260,33 +260,33 @@ export const RetroMidiPlayer = () => {
           variant="secondary"
           onClick={handlePrevTrack}
         >
-          ⏮
+          |&lt;
         </RetroButton>
         <RetroButton
           size="small"
           variant="secondary"
           onClick={handlePlay}
         >
-          {isPlaying ? "⏸" : "▶"}
+          {isPlaying ? "||" : "|>"}
         </RetroButton>
         <RetroButton
           size="small"
           variant="secondary"
           onClick={handleNextTrack}
         >
-          ⏭
+          &gt;|
         </RetroButton>
         <RetroButton
           size="small"
           variant="secondary"
           onClick={cyclePlayMode}
         >
-          {playMode === "repeat-one" ? "🔂" : playMode === "shuffle" ? "🔀" : "🔁"}
+          {playMode === "repeat-one" ? "RPT1" : playMode === "shuffle" ? "SHFL" : "LIST"}
         </RetroButton>
       </div>
 
-      <div className="text-xs text-gray-400 text-center">
-        {isPlaying ? "♪♫♪ 再生中... ♪♫♪" : "停止中"}
+      <div className="text-xs text-gray-400 text-center font-mono">
+        {isPlaying ? "* NOW PLAYING *" : "-- STOPPED --"}
       </div>
     </div>
   );
