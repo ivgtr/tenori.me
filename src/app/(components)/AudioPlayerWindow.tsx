@@ -8,31 +8,57 @@ interface Track {
   tempo: number;
 }
 
+// All melodies are shifted +1 semitone from originals for parody effect
 const tracks: Track[] = [
   {
-    name: "BGM001.mid",
-    notes: [277.18, 311.13, 369.99, 415.30, 277.18, 311.13, 369.99, 415.30, 277.18, 369.99, 415.30, 466.16, 415.30, 369.99, 311.13],
-    tempo: 300,
-  },
-  {
-    name: "BGM002.mid",
-    notes: [277.18, 277.18, 0, 277.18, 0, 261.63, 277.18, 0, 311.13, 0, 0, 0, 155.56, 0, 0, 0],
+    name: "BGM001.mid", // Super Mario Bros - Ground Theme (+1 semitone)
+    notes: [698.46, 698.46, 0, 698.46, 0, 554.37, 698.46, 0, 830.61, 0, 0, 0, 415.30, 0, 0, 0, 554.37, 0, 0, 415.30, 0, 0, 349.23, 0, 466.16, 0, 622.25, 0, 587.33, 554.37, 0, 698.46],
     tempo: 200,
   },
   {
-    name: "BGM003.mid",
-    notes: [311.13, 369.99, 415.30, 466.16, 415.30, 369.99, 311.13, 261.63, 293.66, 329.63, 369.99, 415.30, 369.99, 329.63, 293.66, 261.63],
-    tempo: 350,
-  },
-  {
-    name: "BGM004.mid",
-    notes: [261.63, 293.66, 311.13, 349.23, 329.63, 369.99, 415.30, 466.16, 415.30, 369.99, 329.63, 311.13],
-    tempo: 450,
-  },
-  {
-    name: "BGM005.mid",
-    notes: [369.99, 415.30, 466.16, 369.99, 415.30, 466.16, 369.99, 415.30, 466.16, 523.25, 466.16, 415.30, 369.99],
+    name: "BGM002.mid", // Tetris - Korobeiniki (+1 semitone)
+    notes: [698.46, 523.25, 554.37, 622.25, 554.37, 523.25, 466.16, 466.16, 554.37, 698.46, 622.25, 554.37, 523.25, 554.37, 622.25, 698.46, 554.37, 466.16, 466.16, 0],
     tempo: 280,
+  },
+  {
+    name: "BGM003.mid", // Dragon Quest - Overture (+1 semitone)
+    notes: [311.13, 349.23, 392.00, 466.16, 415.30, 392.00, 349.23, 311.13, 349.23, 392.00, 415.30, 466.16, 415.30, 392.00, 349.23, 311.13],
+    tempo: 340,
+  },
+  {
+    name: "BGM004.mid", // Final Fantasy - Prelude Arpeggio (+1 semitone)
+    notes: [277.18, 311.13, 349.23, 415.30, 554.37, 415.30, 349.23, 311.13, 277.18, 311.13, 349.23, 415.30, 554.37, 698.46, 554.37, 415.30],
+    tempo: 200,
+  },
+  {
+    name: "BGM005.mid", // Zelda - Main Theme (+1 semitone)
+    notes: [493.88, 0, 369.99, 493.88, 493.88, 554.37, 622.25, 659.26, 739.99, 0, 739.99, 659.26, 622.25, 554.37, 493.88, 0],
+    tempo: 300,
+  },
+  {
+    name: "BGM006.mid", // Rockman 2 - Dr. Wily Stage 1 (+1 semitone)
+    notes: [698.46, 698.46, 659.26, 698.46, 523.25, 0, 698.46, 698.46, 659.26, 698.46, 523.25, 466.16, 523.25, 554.37, 466.16, 0],
+    tempo: 220,
+  },
+  {
+    name: "BGM007.mid", // Kirby - Green Greens (+1 semitone)
+    notes: [554.37, 698.46, 830.61, 698.46, 554.37, 622.25, 698.46, 739.99, 698.46, 622.25, 554.37, 0, 554.37, 622.25, 698.46, 830.61],
+    tempo: 260,
+  },
+  {
+    name: "BGM008.mid", // Pokemon - Battle! Wild Pokemon (+1 semitone)
+    notes: [466.16, 466.16, 466.16, 415.30, 466.16, 554.37, 466.16, 415.30, 349.23, 415.30, 466.16, 0, 554.37, 554.37, 466.16, 415.30],
+    tempo: 180,
+  },
+  {
+    name: "BGM009.mid", // Chrono Trigger - Wind Scene (+1 semitone)
+    notes: [311.13, 466.16, 622.25, 587.33, 622.25, 466.16, 415.30, 392.00, 415.30, 466.16, 311.13, 0, 311.13, 392.00, 466.16, 622.25],
+    tempo: 400,
+  },
+  {
+    name: "BGM010.mid", // Mario - Underground Theme (+1 semitone)
+    notes: [277.18, 277.18, 277.18, 0, 277.18, 0, 277.18, 311.13, 0, 277.18, 0, 246.94, 0, 277.18, 0, 0],
+    tempo: 180,
   },
 ];
 
@@ -66,27 +92,43 @@ export const AudioPlayerWindow = () => {
     osc.stop(ctx.currentTime + duration);
   };
 
+  const startPlayback = (trackIndex: number) => {
+    const track = tracks[trackIndex];
+    let noteIndex = 0;
+    let loopCount = 0;
+    const maxLoops = 2;
+
+    intervalRef.current = setInterval(() => {
+      if (noteIndex < track.notes.length) {
+        const note = track.notes[noteIndex];
+        if (note > 0) playNote(note);
+        noteIndex++;
+      } else {
+        loopCount++;
+        if (loopCount >= maxLoops) {
+          // Auto-advance to next track
+          const nextIndex = trackIndex < tracks.length - 1 ? trackIndex + 1 : 0;
+          clearInterval(intervalRef.current!);
+          intervalRef.current = null;
+          setCurrentTrackIndex(nextIndex);
+          startPlayback(nextIndex);
+        } else {
+          noteIndex = 0;
+        }
+      }
+    }, track.tempo);
+
+    vizIntervalRef.current = setInterval(() => {
+      setVisualizerBars(Array.from({ length: 12 }, () => Math.floor(Math.random() * 16) + 2));
+    }, 100);
+  };
+
   const handlePlay = async () => {
     if (!isPlaying) {
       const ctx = createAudioContext();
       if (ctx.state === "suspended") await ctx.resume();
       setIsPlaying(true);
-      const track = tracks[currentTrackIndex];
-      let noteIndex = 0;
-
-      intervalRef.current = setInterval(() => {
-        if (noteIndex < track.notes.length) {
-          const note = track.notes[noteIndex];
-          if (note > 0) playNote(note);
-          noteIndex++;
-        } else {
-          noteIndex = 0;
-        }
-      }, track.tempo);
-
-      vizIntervalRef.current = setInterval(() => {
-        setVisualizerBars(Array.from({ length: 12 }, () => Math.floor(Math.random() * 16) + 2));
-      }, 100);
+      startPlayback(currentTrackIndex);
     } else {
       setIsPlaying(false);
       if (intervalRef.current) clearInterval(intervalRef.current);
